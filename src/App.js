@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import Search from './components/Search';
+import Textarea from './components/Textarea';
+import Card from './components/Card';
+import { colors } from './colors';
+import { useSelector } from 'react-redux';
+
+const cardThemeColors = colors;
+
 
 function App() {
+
+  const notes = useSelector(state => state.notes.filteredItems);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <div className='header'>Notes App</div>
+      <Search />
+      <Textarea />
+      <div className='footer'>
+        {cardThemeColors.map((cardTheme, index) => (<Card key={index} cardTheme={cardTheme} data={notes.filter(item => item.color === cardTheme.title)} />))}
+      </div>
     </div>
   );
 }
